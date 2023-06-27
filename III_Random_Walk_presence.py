@@ -129,7 +129,7 @@ def funct_random_walk_presence ():
 
     with st.expander('Why verify random walk presence ?'):
     
-        image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/Random_walk.png')
+        image = Image.open('Random_walk.png')
         st.image(image, caption='Random walk presence explanation')
                  
     # =============================================================================
