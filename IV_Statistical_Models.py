@@ -525,7 +525,7 @@ def funct_stat_model():
         
         with st.expander('Display the MA process'):
                 
-            image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/MA_Process.png')
+            image = Image.open('MA_Process.png')
             
             st.image(image, caption='The MA steps')
                     
