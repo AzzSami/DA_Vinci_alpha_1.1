@@ -29,7 +29,7 @@ from statsmodels.graphics.tsaplots import plot_pacf
 from sklearn.metrics import mean_squared_error 
 from typing import Union
 from itertools import product
-from tqdm import tqdm_notebook
+from tqdm import tqdm
 from plotly.subplots import make_subplots
 from PIL import Image
     
@@ -155,7 +155,7 @@ def optimize_ARIMA (endog : Union[pd.Series,list],order_list :list,d: int) -> pd
     
     results = [] # List for storing the results.
     
-    for order in tqdm_notebook(order_list):
+    for order in tqdm(order_list):
         try:
             model = SARIMAX(endog, order = (order[0],d,order[1]), simple_differencing= False).fit(disp=False) #In the ARIMA model we only use the p and q order.
         except: 
@@ -209,7 +209,7 @@ def optimize_SARIMA(endog :Union[pd.Series,list], order_list :list, d: int , D: 
     
     results = []
     
-    for order in tqdm_notebook(order_list):
+    for order in tqdm(order_list):
         try:
             model =SARIMAX (endog,
                             order=(order[0],d,order[1]),
