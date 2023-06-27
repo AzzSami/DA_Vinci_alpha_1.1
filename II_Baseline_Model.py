@@ -136,7 +136,7 @@ def funct_baseline_model():
              
     with st.expander('Why using a baseline model ?'):
         
-        image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/Baseline_Model.png')
+        image = Image.open('Baseline_Model.png')
         st.image(image, caption='Baseline model explanation')
 
     # =============================================================================
