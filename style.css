@@ -1,0 +1,37 @@
+body {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    color: aquamarine;
+    font-family: Arial;
+    font-size: 20px;
+}
+.stButton>button {
+    background-color:#84BCDA;
+    height: 4.5em;
+    width: 10em;
+    align-items: center;
+    border: none;
+    font-size:0.8em;
+
+}  
+.stButton>button:hover {
+    color: aquamarine;
+    background-color:#067BC2;
+    border: none;
+    transition: 0.4s;
+    outline-style:none;
+
+}
+.stButton>button:focus {
+    color: aquamarine;
+    background-color:#067BC2;
+    border: none;
+    outline-style:none;
+
+}
+.stTextInput>div>div>input {
+    color: #4F8BF9;
+    font-size: 23px;
+}
+
+footer{visibility: hidden;}
