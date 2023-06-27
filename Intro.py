@@ -27,7 +27,7 @@ def funct_intro():
         st.markdown("<h1 style='justify-content: center;'> DA VINCI FORECASTING </h1>", unsafe_allow_html=True)
     with mid:
         
-        image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting_alpha1.1/PNG/cryptocurrency-art.png')
+        image = Image.open('cryptocurrency-art.png')
     
         st.image(image,width=350)
 
