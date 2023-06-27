@@ -471,7 +471,7 @@ def funct_stat_model():
     st.write('## IV. Statistical models')
     with st.expander ('Statistical section'):
 
-        image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/Statistical_Model.png')      
+        image = Image.open('Statistical_Model.png')      
         st.image(image, caption='Statistics')
                         
 
@@ -641,7 +641,7 @@ def funct_stat_model():
         
         with st.expander('AR steps'):
 
-            image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/AR_Process.png')
+            image = Image.open('AR_Process.png')
             st.image(image, caption='The AR steps')
 
         with st.expander ('AR theory reminder') : 
@@ -769,7 +769,7 @@ def funct_stat_model():
                         2. Perform residuals analysis based on the Q-Q plot (qualitative analysis) and Ljung-Box (quantitative analysis), we want our residuals to be independent and uncorrelated simply as white noise.
                     
                     ''')
-            image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/ARIMA_Process.png')
+            image = Image.open('ARIMA_Process.png')
             st.image(image, caption='The ARIMA steps')
                 
         with st.expander('ARIMA theory reminder'):
@@ -949,7 +949,7 @@ def funct_stat_model():
                                 
         with st.expander('SARIMA steps'):
 
-            image = Image.open('/Users/morisaao/Desktop/Freelance/Da_Vinci_Forecasting/PNG/SARIMA_Process.png')
+            image = Image.open('SARIMA_Process.png')
             st.image(image, caption='The SARIMA steps')
 
         diff_order = st.session_state['chck_box_ad_fuller_diff_order']
