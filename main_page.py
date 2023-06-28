@@ -34,7 +34,7 @@ def main():
     if st.sidebar.button('Intro'):
         st.session_state['page_state'] ='Intro'
     
-    if st.sidebar.button('Gathering Data'):
+    if st.sidebar.button('Gathering Data (Click here first to acces other section)'):
         st.session_state['page_state'] ='Gathering Data'
     
     if st.sidebar.button('Baseline Model'):
