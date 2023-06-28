@@ -1,11 +1,4 @@
 
-import sys
-# Insert functions path into working dir if they are not in the same working dir
-sys.path.append('DA_Vinci_alpha_1.1/pages')
-
-sys.path
-
-
 import streamlit as st
 from pages.Intro import funct_intro
 from pages.I_Gathering_Data import funct_gather_data
@@ -89,12 +82,10 @@ def baseline_model():
     
     funct_baseline_model()
     
-
 def random_walk(): 
     
     funct_random_walk_presence()
     
-
 def statistical_model(): 
     
     funct_stat_model()
