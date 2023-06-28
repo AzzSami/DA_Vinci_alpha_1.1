@@ -1,7 +1,7 @@
 
 
 import sys 
-sys.path="/pages"
+sys.path.insert(0, '/pages')
 import streamlit as st
 from Intro import funct_intro
 from I_Gathering_Data import funct_gather_data
