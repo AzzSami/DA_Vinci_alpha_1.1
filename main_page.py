@@ -82,7 +82,7 @@ def baseline_model():
         
     if 'Gathering Data' not in st.session_state['page_state'] :
             st.error ('Click first on the Gathering Data section to acces dataset')
-    else st.session_state['page_state'] == 'Gathering Data' : 
+    else 'Gathering Data' in st.session_state['page_state'] : 
         funct_baseline_model()
     
 def random_walk(): 
