@@ -31,4 +31,4 @@ Adding of a Deep Learning section :
  - LSTM
  - CNN
 
-Adding of a NLP section
+Adding of a NLP section :
