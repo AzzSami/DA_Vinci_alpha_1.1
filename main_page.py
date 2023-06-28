@@ -1,9 +1,9 @@
 
-import streamlit as st
 import sys
 # Insert functions path into working dir if they are not in the same working dir
 sys.path.insert(1, "C:/pages/") # Edit <p2_functions folder path> and put path
 
+import streamlit as st
 from Intro import funct_intro
 from I_Gathering_Data import funct_gather_data
 from II_Baseline_Model import funct_baseline_model
