@@ -13,23 +13,9 @@ def funct_intro():
     
     #CSS sheet
     local_css("style.css")
-    
-    
-    
-    mid, _right = st.columns(2,gap='large')
-    with _right:
-        #The only solution for now to align item vertically in streamlit
-        st.write('')
-        st.write('')
-        st.write('')
-        st.write('')
-        st.write('')
-        st.markdown("<h1 style='justify-content: center;'> DA VINCI FORECASTING </h1>", unsafe_allow_html=True)
-    with mid:
-        
-        image = Image.open('cryptocurrency-art.png')
-    
-        st.image(image,width=350)
+
+    #Title
+    st.markdown("<h1 style='justify-content: center;'> DA VINCI FORECASTING </h1>", unsafe_allow_html=True)
 
     # =============================================================================
     # Introduction
