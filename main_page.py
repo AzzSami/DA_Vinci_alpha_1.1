@@ -7,7 +7,7 @@ sys.path
 
 
 import streamlit as st
-from Intro import funct_intro
+from pages.Intro import funct_intro
 from I_Gathering_Data import funct_gather_data
 from II_Baseline_Model import funct_baseline_model
 from III_Random_Walk_presence import funct_random_walk_presence
