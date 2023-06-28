@@ -2,7 +2,7 @@
 
 The Da Vinci app is entierly dedicated on stock price forecasting.
 
-## Next release on the DA_Vinci_alpha_1.2
+## Next releases on the DA_Vinci_alpha_1.2
 
 Statistical section : 
 
