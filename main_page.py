@@ -1,7 +1,7 @@
 
 import sys
 # Insert functions path into working dir if they are not in the same working dir
-sys.path.insert(1, ".../pages/") # Edit <p2_functions folder path> and put path
+sys.path.insert(1, "pages") # Edit <p2_functions folder path> and put path
 
 import streamlit as st
 from Intro import funct_intro
