@@ -72,11 +72,11 @@ def main():
 # Here for instance we make sure that we will call the intro function
 def intro_page(): 
     
-    funct_intro()
+        funct_intro()
     
 def gather_data():
     
-    funct_gather_data()
+        funct_gather_data()
     
 def baseline_model(): 
         
