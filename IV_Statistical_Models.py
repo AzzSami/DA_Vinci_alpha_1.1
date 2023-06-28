@@ -616,6 +616,13 @@ def funct_stat_model():
             # MSE METRICS to evaluate the results
             
             st.metric("MSE for the MA Forecast",value= mse_MA)
+            
+        with st.expander('Output the MAPE on the original series'):
+            
+            mape_MA = mape(data_MA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_MA_concat['pred_MA'][len(train):-len(forecast_data_set)])
+
+            st.metric("MAPE for the MA Forecast",value= mape_MA)
+            st.write(f""" ##### Your forecasts are, on average, {mape_MA.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
 
 
         # =============================================================================
@@ -724,7 +731,7 @@ def funct_stat_model():
         # =============================================================================
         # =============================================================================
 
-        with st.expander ('Head the MSE for each foreacasting method the differencied series') : 
+        with st.expander ('Head the MSE ') : 
             
             mse_AR = mean_squared_error(data_AR_concat['Adj Close'][len(train):-len(forecast_data_set)], data_AR_concat['pred_AR'][len(train):-len(forecast_data_set)]) 
             
@@ -751,6 +758,14 @@ def funct_stat_model():
             # =============================================================================
             
             funct_plot_results_series(data_AR_concat[['Adj Close','pred_AR','forecast_AR']],'AR')
+            
+        with st.expander('Output the MAPE on the original series'):
+            
+            pred_AR = mape(data_AR_concat['Adj Close'][len(train):-len(forecast_data_set)], data_AR_concat['pred_AR'][len(train):-len(forecast_data_set)])
+
+            st.metric("MAPE for the AR Forecast",value= pred_AR)
+            st.write(f""" ##### Your forecasts are, on average, {pred_AR.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
+
 
     # =============================================================================
     # =============================================================================
@@ -896,7 +911,7 @@ def funct_stat_model():
         # =============================================================================
         # =============================================================================
         
-        with st.expander("Head the MSE for each foreacasting method on the differencied series") : 
+        with st.expander("Head the MSE") : 
             
             TRAIN_LEN = len(train_diff)
             HORIZON = len(test_diff)+Forecast_horizon
@@ -1149,7 +1164,7 @@ def funct_stat_model():
         # # METRICS
         # =============================================================================
         # =============================================================================
-        with st.expander('SARIMA MSE'):
+        with st.expander('MSE'):
             # =============================================================================
             # =============================================================================
             # # Add the SARIMA forecast
