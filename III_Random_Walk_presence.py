@@ -366,7 +366,7 @@ def funct_random_walk_presence ():
                             # # Next timestep MSE
                             # # =============================================================================
                             # =============================================================================
-                            chck_box_rmse_nxt_tmstep= st.checkbox('Head the MSE') 
+                            chck_box_rmse_nxt_tmstep= st.checkbox('MSE') 
                             
                             if chck_box_rmse_nxt_tmstep:
                                 # Metric
@@ -374,6 +374,18 @@ def funct_random_walk_presence ():
                                 st.warning('The MAPE metric could not be used here because the first value of our random walk could take the value of 0, calculate the difference from an observed value of 0 implies a division by 0 which is not allowed in mathematics.')
                                 st.warning('Here be careful because you are only making prediction for the next value solely by using the last past value. Hence, the MSE is not a solid indicator of performance here.')
                             
+                            # =============================================================================
+                            # # =============================================================================
+                            # # Next timestep MAPE
+                            # # =============================================================================
+                            # =============================================================================
+                            if st.checkbox('MAPE'):
+            
+                            mape_Random_Walk = mape(data['Adj Close'][-(len(test)-1):], pred_next_timestep['next_timestep'])
+        
+                            st.metric("MAPE for the Random Walk Forecast",value= mape_Random_Walk)
+                            st.write(f""" ##### Your forecasts are, on average, {mape_Random_Walk.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
+
                         # =============================================================================
                         # # =============================================================================
                         # # Conclusion of our random forecasting
@@ -489,11 +501,24 @@ def funct_random_walk_presence ():
                         # # =============================================================================
                         # =============================================================================
                         
-                        if st.checkbox('Head the MSE') :
+                        if st.checkbox('MSE') :
                             # Metric
                             st.metric("Mean squarred error (MSE)", value = mean_squared_error(test['Adj Close'], test['pred_drift']))
                             st.warning('The MAPE metric could not be used here because our random walk could take the value of 0, calculate the difference from an observed value of 0 implies a division by 0 which is not allowed in mathematics.')
-                        
+
+                        # =============================================================================
+                        # # =============================================================================
+                        # # Next timestep MAPE
+                        # # =============================================================================
+                        # =============================================================================
+                        if st.checkbox('MAPE'):
+        
+                        mape_Random_Walk = mape(test['Adj Close'], test['pred_drift'])
+    
+                        st.metric("MAPE for the Random Walk Forecast",value= mape_Random_Walk)
+                        st.write(f""" ##### Your forecasts are, on average, {mape_Random_Walk.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
+
+                    
                     # =============================================================================
                     # # =============================================================================
                     # # Next Timestep
