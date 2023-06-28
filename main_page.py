@@ -34,7 +34,7 @@ def main():
     if st.sidebar.button('Intro'):
         st.session_state['page_state'] ='Intro'
     
-    if st.sidebar.button('Gathering Data (Click here first to acces other section)'):
+    if st.sidebar.button('Gathering Data'):
         st.session_state['page_state'] ='Gathering Data'
     
     if st.sidebar.button('Baseline Model'):
@@ -83,8 +83,10 @@ def baseline_model():
         funct_baseline_model()
     
 def random_walk(): 
-    
-    funct_random_walk_presence()
+    if 'Gathering Data' not in st.session_state['page_state'] :
+            st.error ('Click first on the Gathering Data section to acces dataset')
+    else : 
+            funct_random_walk_presence()
     
 def statistical_model(): 
     
