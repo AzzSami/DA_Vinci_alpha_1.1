@@ -36,7 +36,8 @@ def funct_intro():
             Sometimes we win and have an edge over the others and sometimes we learn.
 
             Thank you for reading this intro! Now let us use the DA VINCI FORECAST application and see what she got in the belly, shall we? ''')
-            
+    
+    st.warning('For now, in this alpha version, when first launching of this app or reloading the page with Windows + R, you have to click on the gathering data section before going the other section to load the dataset.')
     # =============================================================================
     # CSS sidebar  
     # =============================================================================
