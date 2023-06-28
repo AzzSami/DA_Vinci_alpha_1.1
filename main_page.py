@@ -1,6 +1,8 @@
 
 import sys
 # Insert functions path into working dir if they are not in the same working dir
+sys.path.append('DA_Vinci_alpha_1.1/pages')
+
 sys.path
 
 
