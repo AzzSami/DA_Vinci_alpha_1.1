@@ -79,7 +79,7 @@ def gather_data():
     funct_gather_data()
     
 def baseline_model(): 
-    if data == None :
+    if len(train) == None  :
             st.error('Please click on the Gather Data section to choose a stock')
     else :
             funct_baseline_model()
