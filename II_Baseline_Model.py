@@ -86,219 +86,221 @@ def mape(y_true, y_pred):
 
     return np.mean(np.abs((y_true - y_pred)/y_true ))*100
 
-
-def funct_baseline_model():
+if st.session_state['train'] == None :
+    st.error ('Click on the Gathering data section first to load a dataset')
+elif : 
+    def funct_baseline_model():
+        
     
-
-    # =============================================================================
-    # =============================================================================
-    # #  Test and Train recall
-    # =============================================================================
-    # =============================================================================
-
-    train = st.session_state['train']
+        # =============================================================================
+        # =============================================================================
+        # #  Test and Train recall
+        # =============================================================================
+        # =============================================================================
     
-    test = st.session_state['test']
+        train = st.session_state['train']
+        
+        test = st.session_state['test']
+        
+        # =============================================================================
+        # =============================================================================
+        # # Data recall
+        # =============================================================================
+        # =============================================================================
+        
+        data = st.session_state['data']
+        
+        # =============================================================================
+        # =============================================================================
+        # # Forecast dataset recall
+        # =============================================================================
+        # =============================================================================
+        
+        forecast_data_set = st.session_state ['forecast_data_set']
     
-    # =============================================================================
-    # =============================================================================
-    # # Data recall
-    # =============================================================================
-    # =============================================================================
+        # =============================================================================
+        # =============================================================================
+        # # Ticker
+        # =============================================================================
+        # =============================================================================
     
-    data = st.session_state['data']
+        ticker = st.session_state['ticker'] 
     
-    # =============================================================================
-    # =============================================================================
-    # # Forecast dataset recall
-    # =============================================================================
-    # =============================================================================
+        # =============================================================================
+        # # =============================================================================
+        # # Baseline model explanation
+        # # =============================================================================
+        # =============================================================================
+                            
+        st.write(""" 
+                     ## II. Choose a baseline model
+                     """)
+                 
+        with st.expander('Why using a baseline model ?'):
+            
+            image = Image.open('Baseline_Model.png')
+            st.image(image, caption='Baseline model explanation')
     
-    forecast_data_set = st.session_state ['forecast_data_set']
-
-    # =============================================================================
-    # =============================================================================
-    # # Ticker
-    # =============================================================================
-    # =============================================================================
-
-    ticker = st.session_state['ticker'] 
-
-    # =============================================================================
-    # # =============================================================================
-    # # Baseline model explanation
-    # # =============================================================================
-    # =============================================================================
+        # =============================================================================
+        # # =============================================================================
+        # # Chose a baseline model
+        # # =============================================================================
+        # =============================================================================
+    
+        chck_box_model = st.selectbox("Choose a baseline model ", ('1. Arithmetic mean','2. Last known value','3. Last year mean','4. Seasonality Forecast' ))
+        
+        # =============================================================================
+        # # =============================================================================
+        # # Arithmetic Mean
+        # # =============================================================================
+        # =============================================================================
+    
+        if chck_box_model == '1. Arithmetic mean':
+            
+            st.info('Forecasting method : Arithmetic mean of the last train week set.')
+            
+            # Compute the arithmetic mean and add it to the test set
+            
+            historical_mean = np.mean(train['Adj Close'][-7])
+            
+            data['pred_mean'] = pd.Series()
+            data['pred_mean'][-len(test):] = historical_mean
+            
+            forecast_data_set['forecast_mean'] = pd.Series()
+            forecast_data_set['forecast_mean'] = historical_mean
+    
+            data_arth_mean_concat = pd.concat([data,forecast_data_set],ignore_index=False)
+    
+            # =============================================================================
+            # =============================================================================
+            # # Plotting the differentiated series        
+            # =============================================================================
+            # =============================================================================
+            
+            with st.expander('Plot the prediction'): 
+    
+                funct_plot_results_series(data_arth_mean_concat[['Adj Close','pred_mean','forecast_mean']], 'Arithmetic Mean')
+            
+            # =============================================================================
+            # =============================================================================
+            # # Defining a MAPE (mean absolute percentage error) function who is our error metric for our naive prediction
+            # =============================================================================
+            # =============================================================================
+    
+            mape_hist_mean = mape(data['Adj Close'][-len(test):], data['pred_mean'])
+            
+            with st.expander('Display the MAPE'):
+    
+                st.metric(label="MAPE", value= mape_hist_mean)
+                st.write(f"""
+                    ##### On the test set, your forecasts are, on average, {mape_hist_mean.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
+                """  )
+    
+    
+        # =============================================================================
+        # # =============================================================================
+        # # Last known value
+        # # =============================================================================
+        # =============================================================================
+    
+        elif chck_box_model == '2. Last known value':
+                
+            st.info('Forecasting method : Prediction solely by using the last data of the last train week set.')
+            # Separate the dataset into train and test set 
+            
+            last = train['Adj Close'].iloc[-1]
+            
+            data['pred_last'] = pd.Series()
+            data['pred_last'][-len(test):] = last
+    
+            forecast_data_set['forecast_last'] = pd.Series()
+            forecast_data_set['forecast_last'] = last
+    
+            data_last_concat = pd.concat([data,forecast_data_set],ignore_index=False)
+    
+    
+            with st.expander ('Plot the results'):
+                funct_plot_results_series(data_last_concat[['Adj Close','pred_last','forecast_last']], 'Last Known Value')
+    
+            mape_last_pred = mape(data['Adj Close'][-len(test):], data['pred_last'])
+        
+        
+            with st.expander ('Display the MAPE'):
+                
+                st.metric(label="MAPE", value= mape_last_pred)
+                st.write(f"""
+                    ##### On the test set, your forecasts are, on average, {mape_last_pred.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
+                """)  
+    
+        # =============================================================================
+        # # =============================================================================
+        # # Last year mean 
+        # # =============================================================================
+        # =============================================================================
+            
+        elif chck_box_model == '3. Last year mean':
+            
+            st.info('Forecasting method : Using the last year mean of the train set')
+        
+            if len(train) < 365 : 
+                st.warning('Your date range must be equal or over 1 year and 1 week.')
+            else :
+                last_year_mean = np.mean(train['Adj Close'][-365:])
+                data['pred_last_yr_mean'] = pd.Series()
+                data['pred_last_yr_mean'][-len(test):] = last_year_mean
+                
+                forecast_data_set['forecast_last_yr'] = pd.Series()
+                forecast_data_set['forecast_last_yr'] = last_year_mean
+    
+                data_last_yr_concat = pd.concat([data,forecast_data_set],ignore_index=False)
+    
+                with st.expander('Plot the results'):
+                    funct_plot_results_series(data_last_yr_concat [['Adj Close','pred_last_yr_mean','forecast_last_yr']], 'Last Year Mean')
+                
+                mape_last_year = mape(data['Adj Close'][-len(test):], data['pred_last_yr_mean'])
+                
+                with st.expander ('Display the MAPE'):
+                    st.metric(label="MAPE", value= mape_last_year)
+                    st.write(f"""
+                        ##### On the test set, your forecasts are, on average, {mape_last_year.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
+                            """)    
+        
+        # =============================================================================
+        # # =============================================================================
+        # # Last season
+        # # =============================================================================
+        # =============================================================================
+    
+        elif chck_box_model == '4. Seasonality Forecast':
+            st.info('Forecasting method : Replicating the seasonality of the last train week set.')
                         
-    st.write(""" 
-                 ## II. Choose a baseline model
-                 """)
-             
-    with st.expander('Why using a baseline model ?'):
-        
-        image = Image.open('Baseline_Model.png')
-        st.image(image, caption='Baseline model explanation')
-
-    # =============================================================================
-    # # =============================================================================
-    # # Chose a baseline model
-    # # =============================================================================
-    # =============================================================================
-
-    chck_box_model = st.selectbox("Choose a baseline model ", ('1. Arithmetic mean','2. Last known value','3. Last year mean','4. Seasonality Forecast' ))
+            with st.expander('Decompose the series on a weekly basis'): 
     
-    # =============================================================================
-    # # =============================================================================
-    # # Arithmetic Mean
-    # # =============================================================================
-    # =============================================================================
-
-    if chck_box_model == '1. Arithmetic mean':
-        
-        st.info('Forecasting method : Arithmetic mean of the last train week set.')
-        
-        # Compute the arithmetic mean and add it to the test set
-        
-        historical_mean = np.mean(train['Adj Close'][-7])
-        
-        data['pred_mean'] = pd.Series()
-        data['pred_mean'][-len(test):] = historical_mean
-        
-        forecast_data_set['forecast_mean'] = pd.Series()
-        forecast_data_set['forecast_mean'] = historical_mean
-
-        data_arth_mean_concat = pd.concat([data,forecast_data_set],ignore_index=False)
-
-        # =============================================================================
-        # =============================================================================
-        # # Plotting the differentiated series        
-        # =============================================================================
-        # =============================================================================
-        
-        with st.expander('Plot the prediction'): 
-
-            funct_plot_results_series(data_arth_mean_concat[['Adj Close','pred_mean','forecast_mean']], 'Arithmetic Mean')
-        
-        # =============================================================================
-        # =============================================================================
-        # # Defining a MAPE (mean absolute percentage error) function who is our error metric for our naive prediction
-        # =============================================================================
-        # =============================================================================
-
-        mape_hist_mean = mape(data['Adj Close'][-len(test):], data['pred_mean'])
-        
-        with st.expander('Display the MAPE'):
-
-            st.metric(label="MAPE", value= mape_hist_mean)
-            st.write(f"""
-                ##### On the test set, your forecasts are, on average, {mape_hist_mean.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
-            """  )
-
-
-    # =============================================================================
-    # # =============================================================================
-    # # Last known value
-    # # =============================================================================
-    # =============================================================================
-
-    elif chck_box_model == '2. Last known value':
+                seasonal_plot(data,7,ticker)
             
-        st.info('Forecasting method : Prediction solely by using the last data of the last train week set.')
-        # Separate the dataset into train and test set 
-        
-        last = train['Adj Close'].iloc[-1]
-        
-        data['pred_last'] = pd.Series()
-        data['pred_last'][-len(test):] = last
-
-        forecast_data_set['forecast_last'] = pd.Series()
-        forecast_data_set['forecast_last'] = last
-
-        data_last_concat = pd.concat([data,forecast_data_set],ignore_index=False)
-
-
-        with st.expander ('Plot the results'):
-            funct_plot_results_series(data_last_concat[['Adj Close','pred_last','forecast_last']], 'Last Known Value')
-
-        mape_last_pred = mape(data['Adj Close'][-len(test):], data['pred_last'])
+            last_season = train['Adj Close'][-7:].values  
+    
+            data['pred_last_season'] = pd.Series()
+            data['pred_last_season'][len(train):(len(train)+7)] = last_season
+    
+            forecast_data_set['forecast_last_season'] = pd.Series()
+            forecast_data_set['forecast_last_season'][:7] = last_season
     
     
-        with st.expander ('Display the MAPE'):
-            
-            st.metric(label="MAPE", value= mape_last_pred)
-            st.write(f"""
-                ##### On the test set, your forecasts are, on average, {mape_last_pred.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
-            """)  
-
-    # =============================================================================
-    # # =============================================================================
-    # # Last year mean 
-    # # =============================================================================
-    # =============================================================================
-        
-    elif chck_box_model == '3. Last year mean':
-        
-        st.info('Forecasting method : Using the last year mean of the train set')
+            data_last_season_concat = pd.concat([data,forecast_data_set],ignore_index=False)
+          
+            with st.expander ('Plot the results'):
     
-        if len(train) < 365 : 
-            st.warning('Your date range must be equal or over 1 year and 1 week.')
-        else :
-            last_year_mean = np.mean(train['Adj Close'][-365:])
-            data['pred_last_yr_mean'] = pd.Series()
-            data['pred_last_yr_mean'][-len(test):] = last_year_mean
-            
-            forecast_data_set['forecast_last_yr'] = pd.Series()
-            forecast_data_set['forecast_last_yr'] = last_year_mean
-
-            data_last_yr_concat = pd.concat([data,forecast_data_set],ignore_index=False)
-
-            with st.expander('Plot the results'):
-                funct_plot_results_series(data_last_yr_concat [['Adj Close','pred_last_yr_mean','forecast_last_yr']], 'Last Year Mean')
-            
-            mape_last_year = mape(data['Adj Close'][-len(test):], data['pred_last_yr_mean'])
+                funct_plot_results_series(data_last_season_concat [['Adj Close','pred_last_season','forecast_last_season']], 'Last Season Forecast')
+    
+            # Defining a MAPE (mean absolute percentage error) function who is our error metric for our naive prediction        
+            mape_seasonal = mape(data['Adj Close'][len(train):(len(train)+7)], data['pred_last_season'])
             
             with st.expander ('Display the MAPE'):
-                st.metric(label="MAPE", value= mape_last_year)
-                st.write(f"""
-                    ##### On the test set, your forecasts are, on average, {mape_last_year.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
-                        """)    
     
-    # =============================================================================
-    # # =============================================================================
-    # # Last season
-    # # =============================================================================
-    # =============================================================================
-
-    elif chck_box_model == '4. Seasonality Forecast':
-        st.info('Forecasting method : Replicating the seasonality of the last train week set.')
-                    
-        with st.expander('Decompose the series on a weekly basis'): 
-
-            seasonal_plot(data,7,ticker)
-        
-        last_season = train['Adj Close'][-7:].values  
-
-        data['pred_last_season'] = pd.Series()
-        data['pred_last_season'][len(train):(len(train)+7)] = last_season
-
-        forecast_data_set['forecast_last_season'] = pd.Series()
-        forecast_data_set['forecast_last_season'][:7] = last_season
-
-
-        data_last_season_concat = pd.concat([data,forecast_data_set],ignore_index=False)
-      
-        with st.expander ('Plot the results'):
-
-            funct_plot_results_series(data_last_season_concat [['Adj Close','pred_last_season','forecast_last_season']], 'Last Season Forecast')
-
-        # Defining a MAPE (mean absolute percentage error) function who is our error metric for our naive prediction        
-        mape_seasonal = mape(data['Adj Close'][len(train):(len(train)+7)], data['pred_last_season'])
-        
-        with st.expander ('Display the MAPE'):
-
-            st.metric(label="MAPE", value= mape_seasonal)
-            st.write (f"""
-                ##### On the test set, your forecasts are, on average, {mape_seasonal.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
-            """)
-
+                st.metric(label="MAPE", value= mape_seasonal)
+                st.write (f"""
+                    ##### On the test set, your forecasts are, on average, {mape_seasonal.round(2)} % below the actual adjusted close prices for the last {len(test)} days.
+                """)
     
+        
