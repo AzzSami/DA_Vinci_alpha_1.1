@@ -513,10 +513,10 @@ def funct_random_walk_presence ():
                         # =============================================================================
                         if st.checkbox('MAPE'):
         
-                        mape_Random_Walk = mape(test['Adj Close'], test['pred_drift'])
-    
-                        st.metric("MAPE for the Random Walk Forecast",value= mape_Random_Walk)
-                        st.write(f""" ##### Your forecasts are, on average, {mape_Random_Walk.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
+                            mape_Random_Walk = mape(test['Adj Close'], test['pred_drift'])
+        
+                            st.metric("MAPE for the Random Walk Forecast",value= mape_Random_Walk)
+                            st.write(f""" ##### Your forecasts are, on average, {mape_Random_Walk.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
 
                     
                     # =============================================================================
