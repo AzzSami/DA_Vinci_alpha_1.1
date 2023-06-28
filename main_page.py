@@ -8,10 +8,10 @@ sys.path
 
 import streamlit as st
 from pages.Intro import funct_intro
-from I_Gathering_Data import funct_gather_data
-from II_Baseline_Model import funct_baseline_model
-from III_Random_Walk_presence import funct_random_walk_presence
-from IV_Statistical_Models import funct_stat_model
+from pages.I_Gathering_Data import funct_gather_data
+from pages.II_Baseline_Model import funct_baseline_model
+from pages.III_Random_Walk_presence import funct_random_walk_presence
+from pages.IV_Statistical_Models import funct_stat_model
 
 def main():
         
