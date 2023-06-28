@@ -79,10 +79,8 @@ def gather_data():
     funct_gather_data()
     
 def baseline_model(): 
-    if len(train) == 0  :
-            st.error('Please click on the Gather Data section to choose a stock')
-    else :
-            funct_baseline_model()
+    
+        funct_baseline_model()
     
 def random_walk(): 
     
