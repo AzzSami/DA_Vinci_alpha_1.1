@@ -1112,7 +1112,7 @@ def funct_stat_model():
             SARIMA_order_list  = list (product(ps,qs,Ps,Qs))
             s= 7 # Week seasonality
             
-            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, st.session_state['D_SARIMA'], s)
+            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, D_SARIMA, s)
             st.table(SARIMA_result_df)
                 
         # =============================================================================
