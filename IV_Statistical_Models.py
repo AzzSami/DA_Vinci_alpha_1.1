@@ -888,7 +888,12 @@ def funct_stat_model():
                 with col2:
                     q_number_res =st.number_input('Please enter the q value of the ARIMA choosen',min_value=0,value =2)
                     
-                model = SARIMAX(train['Adj Close'], order = (p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res),simple_differencing =False) # Calling the SARIMA function to get an accurate model
+                @st.cache_data
+                def SARIMAx ():
+                    model = SARIMAX(train['Adj Close'], order = (p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res),simple_differencing =False)
+                    return model
+                    
+                model = SARIMAx() # Calling the SARIMA function to get an accurate model
                 model_fit  = model.fit(disp=False) #Fitting the model
                 st.success (f'Residual analysis for an ARIMA({p_number_res},{q_number_res})')
                 st.pyplot(model_fit.plot_diagnostics(figsize = (10,8)))
