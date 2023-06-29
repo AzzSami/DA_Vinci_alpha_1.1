@@ -785,7 +785,7 @@ def funct_stat_model():
 
     if Stat_model_selection == '3. Autoregressive Integrated Moving Average Process (ARIMA)':
 
-        with st.expander('ARIMA steps'):
+        if st.checkbox('ARIMA steps'):
             st.info('''In this section, we will not have to use the ACF or PACF plot to observe the correlation order. 
                     We will simply have to : \\
                         \\
@@ -797,7 +797,7 @@ def funct_stat_model():
             image = Image.open('ARIMA_Process.png')
             st.image(image, caption='The ARIMA steps')
                 
-        with st.expander('ARIMA theory reminder'):
+        if st.checkbox('ARIMA theory reminder'):
 
             st.info('''
                     The Autoregressive Integrated Moving Average Process (ARIMA) is a combination of the AR(p) and 
