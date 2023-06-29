@@ -835,7 +835,7 @@ def funct_stat_model():
         # =============================================================================
         # =============================================================================
         
-        with st.expander("List values of p and q"):
+        if st.checkbox("List values of p and q"):
             
             col1, col2 = st.columns([1, 1])
             with col1 :
@@ -863,106 +863,106 @@ def funct_stat_model():
         # =============================================================================
         # =============================================================================
         
-        with st.expander("Perfom residuals analysis"):
-
-            st.info("""This sub section is aming to guide you to know if your residuals are likely resembling to white noise.
-                    \\
-                    \\
-                    It is crucial for us to have gaussian white noise (e.g. normally distributed and uncorrelated) to use our ARIMA model for forecasting and the others left (ARIMA,SARIMA,SARIMAX).
-                    \\
-                    \\
-                    Indeed, it will indicates that the model has captured all of the predictive information, it then left only random fluctuation that cannot be modeled.
-                    """)
-            st.info('''This sub section is aming to guide you to know if your residuals are likely resembling to white noise.
-                        It is crucial for us to have guassian white noise (e.g. normally distributed and uncorrelated) to use our ARIMA model for forecasting.
-                        ''')
-            # =============================================================================
-            # =============================================================================
-            # # Q-Q plot 
-            # =============================================================================
-            # =============================================================================
-
-            col1, col2 = st.columns([1, 1])
-            with col1 :
-                p_number_res =st.number_input('Please enter the p value of the ARIMA choosen',min_value=0,value =2)
-            with col2:
-                q_number_res =st.number_input('Please enter the q value of the ARIMA choosen',min_value=0,value =2)
-                
-            model = SARIMAX(train['Adj Close'], order = (p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res),simple_differencing =False) # Calling the SARIMA function to get an accurate model
-            model_fit  = model.fit(disp=False) #Fitting the model
-            st.success (f'Residual analysis for an ARIMA({p_number_res},{q_number_res})')
-            st.pyplot(model_fit.plot_diagnostics(figsize = (10,8)))
-            
-            # =============================================================================
-            # =============================================================================
-            # # Quantitative Analysis (Ljung-Box)
-            # =============================================================================
-            # =============================================================================
-            
-            residuals = model_fit.resid
-            lbvalue= acorr_ljungbox(residuals, np.arange(1,11,1))
-            st.table(lbvalue)
-            
-            # =============================================================================
-            # =============================================================================
-            # # Checking if the residuals seems to be gaussian white noise
-            # =============================================================================
-            # =============================================================================
-            st.error ('The Ljung-Box p-value has to exceed 0.05 to make forecasts')
-                
-            st.info (f'Your best model is an ARIMA({p_number_res},{q_number_res}), then for the rolling function you will forecast 1 step above to avoid predicting the mean')
-
-            st.success ('Your ARIMA model has passed all the check. You can now go on to the forecasting part !')
-                                            
+            if st.checkbox("Perfom residuals analysis"):
+    
+                st.info("""This sub section is aming to guide you to know if your residuals are likely resembling to white noise.
+                        \\
+                        \\
+                        It is crucial for us to have gaussian white noise (e.g. normally distributed and uncorrelated) to use our ARIMA model for forecasting and the others left (ARIMA,SARIMA,SARIMAX).
+                        \\
+                        \\
+                        Indeed, it will indicates that the model has captured all of the predictive information, it then left only random fluctuation that cannot be modeled.
+                        """)
+                st.info('''This sub section is aming to guide you to know if your residuals are likely resembling to white noise.
+                            It is crucial for us to have guassian white noise (e.g. normally distributed and uncorrelated) to use our ARIMA model for forecasting.
+                            ''')
+                # =============================================================================
+                # =============================================================================
+                # # Q-Q plot 
+                # =============================================================================
+                # =============================================================================
+    
+                col1, col2 = st.columns([1, 1])
+                with col1 :
+                    p_number_res =st.number_input('Please enter the p value of the ARIMA choosen',min_value=0,value =2)
+                with col2:
+                    q_number_res =st.number_input('Please enter the q value of the ARIMA choosen',min_value=0,value =2)
                     
-        # =============================================================================
-        # =============================================================================
-        # # MSE Metric
-        # =============================================================================
-        # =============================================================================
-        
-        with st.expander("Head the MSE") : 
-            
-            TRAIN_LEN = len(train_diff)
-            HORIZON = len(test_diff)+Forecast_horizon
-            WINDOW = 1 
-            
-            forecast_data_set['forecast_ARIMA'] = pd.Series() # The horizon of forecating only
-            
-            data_ARIMA_concat = pd.concat([data,forecast_data_set],ignore_index=False) 
-            
-            pred_ARIMA = rolling_forecast_ARIMA(data,TRAIN_LEN,HORIZON,WINDOW,p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res)
-
-            data_ARIMA_concat['pred_ARIMA'] = pd.Series()
-            data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)] = pred_ARIMA[:len(test)]
-            data_ARIMA_concat['forecast_ARIMA'][-len(forecast_data_set):] = pred_ARIMA[len(test):]
+                model = SARIMAX(train['Adj Close'], order = (p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res),simple_differencing =False) # Calling the SARIMA function to get an accurate model
+                model_fit  = model.fit(disp=False) #Fitting the model
+                st.success (f'Residual analysis for an ARIMA({p_number_res},{q_number_res})')
+                st.pyplot(model_fit.plot_diagnostics(figsize = (10,8)))
                 
-            mse_ARIMA = mean_squared_error(data_ARIMA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)]) 
-            st.metric("MSE for the ARIMA Forecast",value= mse_ARIMA)
+                # =============================================================================
+                # =============================================================================
+                # # Quantitative Analysis (Ljung-Box)
+                # =============================================================================
+                # =============================================================================
+                
+                residuals = model_fit.resid
+                lbvalue= acorr_ljungbox(residuals, np.arange(1,11,1))
+                st.table(lbvalue)
+                
+                # =============================================================================
+                # =============================================================================
+                # # Checking if the residuals seems to be gaussian white noise
+                # =============================================================================
+                # =============================================================================
+                st.error ('The Ljung-Box p-value has to exceed 0.05 to make forecasts')
+                    
+                st.info (f'Your best model is an ARIMA({p_number_res},{q_number_res}), then for the rolling function you will forecast 1 step above to avoid predicting the mean')
+    
+                st.success ('Your ARIMA model has passed all the check. You can now go on to the forecasting part !')
+                                                
+                    
+                # =============================================================================
+                # =============================================================================
+                # # MSE Metric
+                # =============================================================================
+                # =============================================================================
+                
+                if st.checkbox("Head the MSE") : 
+                    
+                    TRAIN_LEN = len(train_diff)
+                    HORIZON = len(test_diff)+Forecast_horizon
+                    WINDOW = 1 
+                    
+                    forecast_data_set['forecast_ARIMA'] = pd.Series() # The horizon of forecating only
+                    
+                    data_ARIMA_concat = pd.concat([data,forecast_data_set],ignore_index=False) 
+                    
+                    pred_ARIMA = rolling_forecast_ARIMA(data,TRAIN_LEN,HORIZON,WINDOW,p_number_res,st.session_state['chck_box_ad_fuller_diff_order'],q_number_res)
+        
+                    data_ARIMA_concat['pred_ARIMA'] = pd.Series()
+                    data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)] = pred_ARIMA[:len(test)]
+                    data_ARIMA_concat['forecast_ARIMA'][-len(forecast_data_set):] = pred_ARIMA[len(test):]
+                        
+                    mse_ARIMA = mean_squared_error(data_ARIMA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)]) 
+                    st.metric("MSE for the ARIMA Forecast",value= mse_ARIMA)
             
-        # =============================================================================
-        # =============================================================================
-        # # Predictions on the original series
-        # =============================================================================
-        # =============================================================================
-        
-        with st.expander("Plot the results on the original series"):
-        
-            funct_plot_results_series(data_ARIMA_concat[['Adj Close','pred_ARIMA','forecast_ARIMA']],'ARIMA')
+                    # =============================================================================
+                    # =============================================================================
+                    # # Predictions on the original series
+                    # =============================================================================
+                    # =============================================================================
+                    
+                    if st.checkbox("Plot the results on the original series"):
+                    
+                        funct_plot_results_series(data_ARIMA_concat[['Adj Close','pred_ARIMA','forecast_ARIMA']],'ARIMA')
 
-        # =============================================================================
-        # =============================================================================
-        # # MAPE
-        # =============================================================================
-        # =============================================================================
-        
-        with st.expander('Output the MAPE on the original series'):
-            
-            mape_ARIMA = mape(data_ARIMA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)])
-
-            st.metric("MAPE for the ARIMA Forecast",value= mape_ARIMA)
-            st.write(f""" ##### Your forecasts are, on average, {mape_ARIMA.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
-
+                        # =============================================================================
+                        # =============================================================================
+                        # # MAPE
+                        # =============================================================================
+                        # =============================================================================
+                        
+                        if st.checkbox('Output the MAPE on the original series'):
+                            
+                            mape_ARIMA = mape(data_ARIMA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_ARIMA_concat['pred_ARIMA'][len(train):-len(forecast_data_set)])
+                
+                            st.metric("MAPE for the ARIMA Forecast",value= mape_ARIMA)
+                            st.write(f""" ##### Your forecasts are, on average, {mape_ARIMA.round(2)} % below the actual adjusted close prices for the last {len(test)} days.""" )
+                
 
     # =============================================================================
     # =============================================================================
