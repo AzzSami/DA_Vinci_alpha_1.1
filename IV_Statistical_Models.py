@@ -121,7 +121,7 @@ def rolling_forecast_ARIMA(data: pd.DataFrame, train_len: int, horizon: int, win
 
     return pred_ARIMA
 
-@st.cache_resource 
+@st.cache_data
 def rolling_forecast_SARIMA(df: pd.DataFrame, train_len: int, horizon: int, window: int, p_number_res :int ,d: int, q_number_res :int,  P_number_res :int, D :int, Q_number_res :int, s: int,  method : str) :
     
     if method == 'SARIMA':
