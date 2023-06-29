@@ -121,7 +121,7 @@ def rolling_forecast_ARIMA(data: pd.DataFrame, train_len: int, horizon: int, win
 
     return pred_ARIMA
 
-@st.cache_resource
+@st.cache_data
 def rolling_forecast_SARIMA(df: pd.DataFrame, train_len: int, horizon: int, window: int, p_number_res :int ,d: int, q_number_res :int,  P_number_res :int, D :int, Q_number_res :int, s: int,  method : str) :
     
     if method == 'SARIMA':
@@ -1111,7 +1111,7 @@ def funct_stat_model():
             SARIMA_order_list  = list (product(ps,qs,Ps,Qs))
             s= 7 # Week seasonality
             
-            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, st.session_state['D_SARIMA'], s)
+            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, D_SARIMA, s)
             st.table(SARIMA_result_df)
                 
         # =============================================================================
