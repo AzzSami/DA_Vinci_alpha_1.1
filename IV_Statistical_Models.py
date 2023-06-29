@@ -1171,29 +1171,30 @@ def funct_stat_model():
                 
         # =============================================================================
         # =============================================================================
+        # # Add the SARIMA forecast
+        # =============================================================================
+        # =============================================================================
+
+        TRAIN_LEN = len(train_diff)
+        HORIZON = len(test_diff)+Forecast_horizon
+        WINDOW = 1 
+        
+        forecast_data_set['forecast_SARIMA'] = pd.Series() # The horizon of forecating only
+        
+        data_SARIMA_concat = pd.concat([data,forecast_data_set],ignore_index=False) 
+        
+        pred_SARIMA = rolling_forecast_SARIMA(data['Adj Close'],TRAIN_LEN,HORIZON,WINDOW,p_number_res_SARIMA,diff_order,q_number_res_SARIMA,P_number_res_SARIMA,D_SARIMA,Q_number_res_SARIMA,7,'SARIMA')
+
+        data_SARIMA_concat['pred_SARIMA'] = pd.Series()
+        data_SARIMA_concat['pred_SARIMA'][len(train):-len(forecast_data_set)] = pred_SARIMA[:len(test)]
+        data_SARIMA_concat['forecast_SARIMA'][-len(forecast_data_set):] = pred_SARIMA[len(test):]
+        
+        # =============================================================================
+        # =============================================================================
         # # METRICS
         # =============================================================================
         # =============================================================================
         with st.expander('MSE'):
-            # =============================================================================
-            # =============================================================================
-            # # Add the SARIMA forecast
-            # =============================================================================
-            # =============================================================================
-
-            TRAIN_LEN = len(train_diff)
-            HORIZON = len(test_diff)+Forecast_horizon
-            WINDOW = 1 
-            
-            forecast_data_set['forecast_SARIMA'] = pd.Series() # The horizon of forecating only
-            
-            data_SARIMA_concat = pd.concat([data,forecast_data_set],ignore_index=False) 
-            
-            pred_SARIMA = rolling_forecast_SARIMA(data['Adj Close'],TRAIN_LEN,HORIZON,WINDOW,p_number_res_SARIMA,diff_order,q_number_res_SARIMA,P_number_res_SARIMA,D_SARIMA,Q_number_res_SARIMA,7,'SARIMA')
-
-            data_SARIMA_concat['pred_SARIMA'] = pd.Series()
-            data_SARIMA_concat['pred_SARIMA'][len(train):-len(forecast_data_set)] = pred_SARIMA[:len(test)]
-            data_SARIMA_concat['forecast_SARIMA'][-len(forecast_data_set):] = pred_SARIMA[len(test):]
 
             mse_SARIMA = mean_squared_error(data_SARIMA_concat['Adj Close'][len(train):-len(forecast_data_set)], data_SARIMA_concat['pred_SARIMA'][len(train):-len(forecast_data_set)]) 
             st.metric("MSE for the SARIMA Forecast",value= mse_SARIMA)
