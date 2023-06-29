@@ -204,7 +204,7 @@ def seasonal_plot (df,frequency,ticker): #Add the dataframe we are working with 
 # =============================================================================
 # =============================================================================
 
-@st.cache_data
+@st.cache_data(show_spinner='Loading the SARIMA model')
 def optimize_SARIMA(endog :Union[pd.Series,list], order_list :list, d: int , D: int, s:int) -> pd.DataFrame:
     
     results = []
