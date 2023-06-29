@@ -174,7 +174,7 @@ def optimize_ARIMA (endog : Union[pd.Series,list],order_list :list,d: int) -> pd
 # # Function to plot the seasonality on the SARIMA function
 # =============================================================================
 # =============================================================================
-@st.cache_resource
+@st.cache_data
 def seasonal_plot (df,frequency,ticker): #Add the dataframe we are working with and the frequency we are supposing. Remember, for now we assume a weekly seasonality on our series.
     
     decomposition = STL(df['Adj Close'],period =frequency).fit()
