@@ -38,7 +38,7 @@ def split_data(df,test_split):
 @st.cache_data
 def funct_plot_series(df : list, name_series : str):
     
-    fig = px.line(df, title= f'The {name_series} adjusted close price',width =700)
+    fig = px.line(df, title= f'The {name_series} adjusted close price',width =650)
     
     return st.write(fig)
 
