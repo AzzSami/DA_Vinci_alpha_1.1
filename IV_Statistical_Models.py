@@ -1089,7 +1089,6 @@ def funct_stat_model():
             # # For the SARIMA stat model we simply have to make a use of s instead of m which will denote the frequency
             # =============================================================================
             # =============================================================================
-            D_SARIMA = st.session_state['D_SARIMA']
 
             col1, col2,col3,col4 = st.columns([1, 1, 1, 1],gap= 'small')
             with col1 :
@@ -1112,7 +1111,7 @@ def funct_stat_model():
             SARIMA_order_list  = list (product(ps,qs,Ps,Qs))
             s= 7 # Week seasonality
             
-            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, D_SARIMA, s)
+            SARIMA_result_df = optimize_SARIMA(train['Adj Close'], SARIMA_order_list, d, st.session_state['D_SARIMA'], s)
             st.table(SARIMA_result_df)
                 
         # =============================================================================
