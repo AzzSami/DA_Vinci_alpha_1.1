@@ -21,6 +21,5 @@ Supervised Learning :
 
 Adding of a Deep Learning section :
 
- - Prophet
  - LSTM
  - CNN
