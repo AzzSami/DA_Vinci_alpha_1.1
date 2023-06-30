@@ -29,13 +29,13 @@ def funct_intro():
             However, it would be almost impossible to explain every step we will walk through. 
             Hence, it is for that very reason I did add a plan showing you the big lines of the process.
 
-            When making this application, I kept in mind that not everything can be predicted. We have to keep in mind that we are making predictions about the future based on past events.
+            When making this application, I kept in mind that not everything can be predicted. I think we have to remember that we are making predictions about the future based on past events.
             Forecasting is not a hard science, we might find encounter situations where nothing seems to work.
             
-            Thus, we should always learn from failure and accept that some forecasts could fail.
-            Sometimes we win and have an edge over the others and sometimes we learn.
+            Thus, we should always learn from failure and accept that some forecasts could fail. 
+            Sometimes we win and have an edge over the others, and sometimes we learn.
 
-            Thank you for reading this intro! Now let us use the DA VINCI FORECAST application and see what she got in the belly, shall we? ''')
+            Thank you for reading this intro! Now let us use the DA VINCI FORECASTING application and see what she got in the belly, shall we ?''')
     
     st.warning('For now, on this alpha version, when first launching of this app or reloading the page with Windows + R, you have to click on the gathering data sections before going the other sections to load the dataset.')
     # =============================================================================
