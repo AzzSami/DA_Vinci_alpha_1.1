@@ -38,6 +38,7 @@ def funct_intro():
             Thank you for reading this intro! Now let us use the DA VINCI FORECASTING application and see what she got in the belly, shall we ?''')
     
     st.warning('For now, on this alpha version, when first launching of this app or reloading the page with Windows + R, you have to click on the gathering data sections before going the other sections to load the dataset.')
+    st.warning('Also, for the next release the application will be more rapid, we using some models like the SARIMA you might facing slowness, the code will be more efficient.')
     # =============================================================================
     # CSS sidebar  
     # =============================================================================
