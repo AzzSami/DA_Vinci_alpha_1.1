@@ -10,4 +10,5 @@ streamlit==1.23.1
 streamlit_lottie==0.0.5
 tqdm==4.65.0
 yfinance==0.2.18
-pip install streamlit --upgrade
+
+
